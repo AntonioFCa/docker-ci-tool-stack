@@ -23,8 +23,7 @@ services:
 #    - /usr/local/bin/docker:/usr/bin/docker
     - /opt/jenkins/:/var/lib/jenkins/
   depends_on:
-    - nexus
-    - gitlab
+    - nexus    
     - sonar    
   environment:
     - NEXUS_PORT=8081
@@ -51,20 +50,3 @@ services:
    - POSTGRES_PASSWORD=sonar
   volumes:
     - /opt/postgres/data:/var/lib/postgresql/data
-
- gitlab:
-  image: gitlab/gitlab-ce:8.9.6-ce.0
-  restart: always
-  hostname: '192.168.99.100'
-  environment:
-    GITLAB_OMNIBUS_CONFIG: |
-      # external_url 'https://gitlab.example.com'
-      # Add any other gitlab.rb configuration here, each on its own line
-  ports:
-    - "80:80"
-    - "443:443"
-    - "2222:22"
-  volumes:
-    - /opt/gitlab/config:/etc/gitlab
-    - /opt/gitlab/logs:/var/log/gitlab
-    - /opt/gitlab/data:/var/opt/gitlab
